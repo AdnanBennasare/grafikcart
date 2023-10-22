@@ -74,11 +74,35 @@ Route::prefix('/blog')->name('blog.')->group(function () {
 
     Route::get('/', function (Request $request) {
 
+        $post = App\Models\Post::where('id', '>', 1)->update([
+        'title' => 'first pos',
+        'slug' => 'her poher',
+        'content' => 'hhh pos'
+        ]);
+        
+        // $post = App\Models\Post::where('id', '>', 1)->update([
+        // 'title' => 'first pos',
+        // 'slug' => 'her poher',
+        // 'content' => 'hhh pos'
+        // ]);
+
+        // $post = App\Models\Post::where('id', '>', 1)->delete();
+    
+
 
         // $post = new Post();
-        // $post->title = 'first post';
-        // $post->slug = 'her poherest';
-        // $post->content = 'hhh post';
+        // $post->create([
+        // 'title' => 'first pos',
+        // 'slug' => 'her poher',
+        // 'content' => 'hhh pos'
+        // ]);
+
+  
+
+        // $post = new Post();
+        // $post->title = 'first postvxv';
+        // $post->slug = 'her poherestcvxb';
+        // $post->content = 'hhh postcxvb';
         // $post->save();
 
         // return $post;
@@ -91,9 +115,15 @@ Route::prefix('/blog')->name('blog.')->group(function () {
         //  $post = Post::find(1);
         //  return $post;
 
-        $post = Post::find(1);
-        $post->title = 'new name';
-        $post->save();
+        // $post = Post::find(1);
+        // $post->title = 'new name';
+        // $post->save();
+        
+        //  $post = Post::findOrFail(2);
+         $post = Post::paginate(1);
+
+         dd($post);
+        
 
         return [
             "link" => \route('blog.show', ['slug' => 'article', 'id' => 13]),
