@@ -3,6 +3,7 @@
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,19 +68,16 @@ Route::get('/', function () {
 // ])->name('blog.show');
 
 
-Route::prefix('/blog')->name('blog.')->group(function () {
+Route::prefix('/blog')->name('blog.')->controller(BlogController::class)->group(function () {
 
 
+    Route::get('/', 'index')->name('index');
 
+    Route::get('/{slug}-{id}', 'show')->name('show');
 
-    Route::get('/', function (Request $request) {
+           
+});
 
-        $post = App\Models\Post::where('id', '>', 1)->update([
-        'title' => 'first pos',
-        'slug' => 'her poher',
-        'content' => 'hhh pos'
-        ]);
-        
         // $post = App\Models\Post::where('id', '>', 1)->update([
         // 'title' => 'first pos',
         // 'slug' => 'her poher',
@@ -90,13 +88,7 @@ Route::prefix('/blog')->name('blog.')->group(function () {
     
 
 
-        // $post = new Post();
-        // $post->create([
-        // 'title' => 'first pos',
-        // 'slug' => 'her poher',
-        // 'content' => 'hhh pos'
-        // ]);
-
+     
   
 
         // $post = new Post();
@@ -120,27 +112,8 @@ Route::prefix('/blog')->name('blog.')->group(function () {
         // $post->save();
         
         //  $post = Post::findOrFail(2);
-         $post = Post::paginate(1);
+        //  $post = Post::paginate(1);
 
-         dd($post);
-        
+        //  dd($post);
 
-        return [
-            "link" => \route('blog.show', ['slug' => 'article', 'id' => 13]),
-        ];
-    })->name('index');
-
-    Route::get('/{slug}/{id}', function (Request $request, string $slug, string $id) {
-        return [
-            "slug" => $slug,
-            "id" => $id,
-            "name" => $request->input('name'),
-        ];
-    })->where([
-
-                'id' => '[0-9]+',
-                'slug' => '[a-z0-9\-]+'
-
-            ])->name('show');
-});
 
